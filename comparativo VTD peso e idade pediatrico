@@ -1,0 +1,43 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Dados para o gráfico
+pesos = ['<5 kg', '5 a <15 kg', '15 a <30 kg', '30 a <50 kg', '50 a <80 kg']
+drl_peso = [0.08245, 0.04355, 0.1430, 0.189, 0.307]
+
+idades = ['<1 ano', '1 a <5 anos', '5 a <10 anos', '10 a <15 anos', '15 anos']
+drl_idade = [0.0669, 0.088, 0.1700, 0.312, 0.279]
+
+# Ajustando as posições no eixo X para os dois conjuntos de dados
+x_peso = np.arange(len(pesos))
+x_idade = np.arange(len(idades)) + len(pesos) + 1  # Separação entre os grupos
+
+# Criar o gráfico
+plt.figure(figsize=(8, 4))
+
+# Adicionar barras para os dados de peso
+bars_peso = plt.bar(x_peso, drl_peso, width=0.4, label='Por Peso (Gycm²)', color='skyblue', edgecolor='black')
+
+# Adicionar barras para os dados de idade
+bars_idade = plt.bar(x_idade, drl_idade, width=0.4, label='Por Idade (Gycm²)', color='salmon', edgecolor='black')
+
+# Adicionar valores no topo de cada barra
+for bar in bars_peso:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 1, yval + 0.005, f'{yval:.3f}', ha='center', va='bottom', fontsize=7)
+
+for bar in bars_idade:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 1, yval + 0.005, f'{yval:.3f}', ha='center', va='bottom', fontsize=7)
+
+# Adicionar rótulos nos eixos
+plt.xticks(np.concatenate([x_peso, x_idade]), pesos + idades, rotation=20, fontsize=7)
+plt.ylabel('Q2 de PKA (Gycm²)')
+plt.title('Comparação de VTD de procedimeto FGI de inserção de CVC - por Peso e Idade')
+plt.legend()
+plt.grid(axis='y', linestyle='--', alpha=0.3)
+
+# Mostrar o gráfico
+plt.tight_layout()
+plt.show()
+  
